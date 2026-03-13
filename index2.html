@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digitologics — Websites & Funnels That Turn Visitors Into Customers</title>
+<meta name="description" content="Digitologics builds high-converting websites, sales funnels, course platforms and automation systems for coaches, creators and online businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --bg: #080810;
+  --bg-2: #0d0d1a;
+  --bg-3: #12121f;
+  --surface: rgba(255,255,255,0.04);
+  --surface-hover: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border-bright: rgba(255,255,255,0.14);
+  --white: #ffffff;
+  --off-white: #e8e8f0;
+  --muted: rgba(255,255,255,0.45);
+  --faint: rgba(255,255,255,0.22);
+
+  --coral: #ff5c38;
+  --coral-glow: rgba(255,92,56,0.18);
+  --teal: #00d4aa;
+  --teal-glow: rgba(0,212,170,0.15);
+  --blue: #4b8eff;
+  --blue-glow: rgba(75,142,255,0.15);
+  --amber: #ffb340;
+
+  --grad-1: linear-gradient(135deg, #ff5c38, #ff8c55);
+  --grad-teal: linear-gradient(135deg, #00d4aa, #00b4ff);
+  --grad-glow: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,92,56,0.12), transparent);
+
+  --radius: 20px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Instrument Sans', sans-serif;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--off-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(255,92,56,0.4); border-radius: 4px; }
+
+/* ═══════════════════════════════════════════
+   ANIMATED BACKGROUND MESH
+═══════════════════════════════════════════ */
+.mesh-bg {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+}
+.mesh-orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6;
+  animation: orb-drift 20s ease-in-out infinite alternate;
+}
+.mesh-orb-1 { width: 600px; height: 600px; top: -200px; right: -100px; background: radial-gradient(circle, rgba(255,92,56,0.08), transparent 70%); animation-delay: 0s; }
+.mesh-orb-2 { width: 500px; height: 500px; bottom: 20%; left: -150px; background: radial-gradient(circle, rgba(75,142,255,0.07), transparent 70%); animation-delay: -8s; }
+.mesh-orb-3 { width: 400px; height: 400px; top: 50%; right: 10%; background: radial-gradient(circle, rgba(0,212,170,0.06), transparent 70%); animation-delay: -4s; }
+@keyframes orb-drift {
+  0% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(40px,-30px) scale(1.05); }
+  66% { transform: translate(-20px,50px) scale(0.95); }
+  100% { transform: translate(30px,20px) scale(1.02); }
+}
+
+/* Grid overlay */
+.grid-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 0 5vw;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid transparent;
+  transition: background .4s, border-color .4s, backdrop-filter .4s;
+}
+nav.scrolled {
+  background: rgba(8,8,16,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom-color: var(--border);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 800; font-size: 1.3rem;
+  color: var(--white); text-decoration: none;
+  letter-spacing: -0.03em;
+}
+.nav-logo em { font-style: normal; color: var(--coral); }
+.nav-center {
+  display: flex; align-items: center; gap: 2rem;
+  list-style: none;
+}
+.nav-center a {
+  font-size: 0.875rem; font-weight: 500; color: var(--muted);
+  text-decoration: none; transition: color .2s; letter-spacing: 0.01em;
+}
+.nav-center a:hover, .nav-center a.active { color: var(--white); }
+.nav-right { display: flex; align-items: center; gap: .75rem; }
+.btn-ghost {
+  font-family: var(--font-body); font-size: 0.875rem; font-weight: 500;
+  color: var(--muted); background: none; border: none; cursor: pointer;
+  padding: 8px 14px; border-radius: 50px;
+  transition: color .2s, background .2s; text-decoration: none;
+}
+.btn-ghost:hover { color: var(--white); background: var(--surface); }
+.btn-coral {
+  font-family: var(--font-body); font-size: 0.875rem; font-weight: 600;
+  color: var(--white); background: var(--coral);
+  border: none; cursor: pointer; text-decoration: none;
+  padding: 10px 22px; border-radius: 50px;
+  transition: all .25s; display: inline-flex; align-items: center; gap: .4rem;
+  box-shadow: 0 0 20px rgba(255,92,56,0.3);
+}
+.btn-coral:hover { background: #ff4020; transform: translateY(-1px); box-shadow: 0 4px 30px rgba(255,92,56,0.45); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; }
+.hamburger span { display: block; width: 22px; height: 1.5px; background: var(--off-white); border-radius: 2px; transition: .3s; }
+.mobile-nav {
+  display: none; position: fixed; top: 68px; inset-x: 0; z-index: 999;
+  background: rgba(8,8,16,0.97); backdrop-filter: blur(24px);
+  padding: 2rem 5vw 3rem; flex-direction: column; gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  font-size: 1.05rem; font-weight: 500; color: var(--muted);
+  text-decoration: none; padding: 1rem 0;
+  border-bottom: 1px solid var(--border); transition: color .2s;
+}
+.mobile-nav a:hover { color: var(--white); }
+.mobile-nav a:last-child { border: none; margin-top: 1rem; }
+
+/* ═══════════════════════════════════════════
+   PAGE SYSTEM
+═══════════════════════════════════════════ */
+.page { display: none; position: relative; z-index: 1; }
+.page.active { display: block; }
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY SYSTEM
+═══════════════════════════════════════════ */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--coral); border: 1px solid rgba(255,92,56,0.25);
+  padding: 5px 14px; border-radius: 50px; background: rgba(255,92,56,0.08);
+}
+.eyebrow::before { content: ''; width: 5px; height: 5px; background: var(--coral); border-radius: 50%; animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.6)} }
+
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+h1 { font-size: clamp(3rem, 6.5vw, 6rem); }
+h2 { font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.1; }
+h3 { font-size: 1.35rem; line-height: 1.2; }
+h4 { font-size: 1.1rem; }
+
+.text-white { color: var(--white); }
+.text-muted { color: var(--muted); }
+.text-coral { color: var(--coral); }
+.text-teal { color: var(--teal); }
+
+.grad-text {
+  background: linear-gradient(135deg, var(--white) 0%, rgba(255,255,255,.6) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.coral-text {
+  background: var(--grad-1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.teal-text {
+  background: var(--grad-teal);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 5vw; }
+.container-narrow { max-width: 860px; margin: 0 auto; padding: 0 5vw; }
+.section { padding: 110px 0; }
+.section-sm { padding: 70px 0; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; }
+.tc { text-align: center; }
+.sh { margin-bottom: 4rem; }
+.sh.centered { margin-left: auto; margin-right: auto; max-width: 640px; text-align: center; }
+.sh p { font-size: 1.05rem; color: var(--muted); margin-top: 1.1rem; line-height: 1.75; }
+.sh h2 { margin-top: .9rem; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-start { display: flex; align-items: center; justify-content: flex-start; gap: 1rem; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.gap-1 { gap: 1rem; }
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mt-3 { margin-top: 3rem; }
+
+/* ═══════════════════════════════════════════
+   GLASS CARDS
+═══════════════════════════════════════════ */
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  transition: background .3s, border-color .3s, transform .3s, box-shadow .3s;
+}
+.glass:hover { background: var(--surface-hover); border-color: var(--border-bright); }
+.glass-glow:hover { box-shadow: 0 0 40px rgba(255,92,56,0.08), 0 20px 60px rgba(0,0,0,0.4); transform: translateY(-4px); }
+.glass-p { padding: 2rem; }
+.glass-p-lg { padding: 2.5rem; }
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════ */
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.9rem;
+  padding: 14px 28px; border-radius: 50px; text-decoration: none;
+  cursor: pointer; border: none; transition: all .25s; letter-spacing: 0.01em;
+}
+.btn-lg { padding: 17px 36px; font-size: 0.95rem; }
+.btn-sm { padding: 10px 20px; font-size: 0.82rem; }
+.btn-primary {
+  background: var(--coral); color: var(--white);
+  box-shadow: 0 0 24px rgba(255,92,56,0.3);
+}
+.btn-primary:hover { background: #ff4020; transform: translateY(-2px); box-shadow: 0 8px 36px rgba(255,92,56,0.5); }
+.btn-secondary {
+  background: var(--surface); color: var(--off-white);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--surface-hover); border-color: var(--border-bright); transform: translateY(-2px); }
+.btn-teal { background: var(--teal); color: var(--bg); }
+.btn-teal:hover { background: #00c49a; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,170,0.35); }
+.btn-outline-coral { background: transparent; color: var(--coral); border: 1.5px solid rgba(255,92,56,0.4); }
+.btn-outline-coral:hover { background: rgba(255,92,56,0.1); border-color: var(--coral); }
+.arrow-icon { display: inline-block; transition: transform .2s; font-style: normal; }
+a:hover .arrow-icon, button:hover .arrow-icon { transform: translateX(3px); }
+
+/* ═══════════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════════ */
+.divider { width: 100%; height: 1px; background: var(--border); }
+.divider-glow { background: linear-gradient(90deg, transparent, rgba(255,92,56,0.3), transparent); }
+
+/* ═══════════════════════════════════════════
+   BADGE / PILL
+═══════════════════════════════════════════ */
+.badge { display: inline-flex; align-items: center; gap: .3rem; font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 50px; }
+.badge-green { background: rgba(0,212,100,0.1); color: #00d464; border: 1px solid rgba(0,212,100,0.2); }
+.badge-coral { background: rgba(255,92,56,0.1); color: var(--coral); border: 1px solid rgba(255,92,56,0.2); }
+.badge-blue { background: rgba(75,142,255,0.1); color: var(--blue); border: 1px solid rgba(75,142,255,0.2); }
+.badge-amber { background: rgba(255,179,64,0.1); color: var(--amber); border: 1px solid rgba(255,179,64,0.2); }
+
+/* ═══════════════════════════════════════════
+   SCARCITY BAR
+═══════════════════════════════════════════ */
+.scarcity-bar {
+  background: linear-gradient(90deg, rgba(255,92,56,0.12), rgba(255,92,56,0.06));
+  border-bottom: 1px solid rgba(255,92,56,0.2);
+  padding: 10px 0;
+  text-align: center; font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,.75);
+  position: relative; z-index: 999; margin-top: 68px;
+}
+.scarcity-bar em { font-style: normal; color: var(--coral); font-weight: 700; }
+
+/* ═══════════════════════════════════════════
+   ██ HOME PAGE
+═══════════════════════════════════════════ */
+
+/* ── HERO ── */
+.hero {
+  min-height: calc(100vh - 68px);
+  display: flex; align-items: center;
+  padding: 80px 0 100px;
+  position: relative; overflow: hidden;
+}
+.hero-glow {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 400px;
+  background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(255,92,56,0.1), transparent);
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 1; text-align: center; }
+.hero-tag { margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: .75rem; flex-wrap: wrap; }
+.hero-tag .sep { color: var(--faint); }
+.hero h1 { max-width: 900px; margin: 0 auto 1.75rem; }
+.hero-sub { font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--muted); max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.75; }
+.hero-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+.hero-metrics { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 5rem; flex-wrap: wrap; }
+.hero-metric {
+  padding: 2rem 3rem; border-right: 1px solid var(--border);
+  text-align: center;
+}
+.hero-metric:last-child { border-right: none; }
+.hm-val { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; color: var(--white); }
+.hm-val span { color: var(--coral); }
+.hm-label { font-size: 0.82rem; color: var(--muted); margin-top: .25rem; }
+.hero-metrics-wrap {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; max-width: 800px; margin: 5rem auto 0;
+}
+
+/* Floating dashboard card */
+.hero-dashboard {
+  position: relative; max-width: 640px; margin: 0 auto 4rem;
+  animation: hero-float 7s ease-in-out infinite;
+}
+@keyframes hero-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+.dash-card {
+  background: rgba(13,13,26,0.9);
+  border: 1px solid var(--border-bright);
+  border-radius: 24px;
+  padding: 1.75rem;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+}
+.dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.dash-title { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.dash-chart { height: 100px; position: relative; }
+.dash-chart svg { width: 100%; height: 100%; }
+.dash-row { display: flex; justify-content: space-between; margin-top: 1.25rem; }
+.dash-kpi h4 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -.03em; color: var(--white); }
+.dash-kpi span { font-size: 0.78rem; color: var(--muted); display: block; margin-top: .1rem; }
+.dash-float-1, .dash-float-2 {
+  position: absolute;
+  background: rgba(13,13,26,0.95); border: 1px solid var(--border-bright);
+  border-radius: 14px; padding: 12px 16px;
+  display: flex; align-items: center; gap: .75rem;
+  font-size: 0.8rem; font-weight: 500; color: var(--off-white);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  white-space: nowrap;
+}
+.dash-float-1 { top: 20px; right: -50px; animation: hero-float 5s ease-in-out infinite 1.5s; }
+.dash-float-2 { bottom: 30px; left: -50px; animation: hero-float 6s ease-in-out infinite .5s; }
+.fi { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.fi-green { background: rgba(0,212,100,0.15); }
+.fi-coral { background: rgba(255,92,56,0.15); }
+.fi-blue { background: rgba(75,142,255,0.15); }
+
+/* ── LOGOS ── */
+.logos-section { padding: 50px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.logos-label { font-size: 0.75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); text-align: center; margin-bottom: 2rem; }
+.logos-row { display: flex; align-items: center; justify-content: center; gap: 3.5rem; flex-wrap: wrap; }
+.logo-name {
+  font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+  color: var(--faint); letter-spacing: -.02em; transition: color .2s; cursor: default;
+}
+.logo-name:hover { color: rgba(255,255,255,.35); }
+
+/* ── PROBLEM SECTION ── */
+.problems-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+.problem-card { padding: 1.75rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); position: relative; overflow: hidden; }
+.problem-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,92,56,0.4), transparent); }
+.problem-num { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: rgba(255,92,56,0.08); line-height: 1; margin-bottom: .5rem; }
+.problem-card h4 { color: var(--off-white); margin-bottom: .5rem; font-size: 1.05rem; }
+.problem-card p { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+.solution-bridge {
+  background: linear-gradient(135deg, rgba(255,92,56,0.05), rgba(75,142,255,0.05));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 3rem; text-align: center; margin-top: 3rem;
+}
+
+/* ── SERVICES GRID ── */
+.service-card-v2 {
+  padding: 2rem; border-radius: var(--radius); position: relative;
+  background: var(--surface); border: 1px solid var(--border);
+  overflow: hidden; cursor: default;
+  transition: all .35s;
+}
+.service-card-v2::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(255,92,56,0.06), transparent 70%);
+  opacity: 0; transition: opacity .35s;
+}
+.service-card-v2:hover { border-color: rgba(255,92,56,0.25); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.service-card-v2:hover::after { opacity: 1; }
+.sc-icon {
+  width: 50px; height: 50px; border-radius: 14px;
+  background: var(--coral-glow); border: 1px solid rgba(255,92,56,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; margin-bottom: 1.25rem;
+}
+.sc-problem { font-size: .78rem; font-weight: 600; color: var(--coral); letter-spacing: .06em; text-transform: uppercase; margin-bottom: .5rem; }
+.sc-solution { font-size: .9rem; color: var(--muted); line-height: 1.65; margin: .5rem 0 1rem; }
+.sc-outcome {
+  font-size: .82rem; color: var(--teal); font-weight: 600;
+  display: flex; align-items: center; gap: .4rem; margin-top: 1.25rem;
+  padding-top: 1.25rem; border-top: 1px solid var(--border);
+}
+.sc-outcome::before { content: '→'; }
+
+/* ── PROCESS ── */
+.process-section { background: var(--bg-2); }
+.process-line {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  position: relative; gap: 0;
+}
+.process-line::before {
+  content: ''; position: absolute;
+  top: 32px; left: 12.5%; right: 12.5%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--coral), rgba(75,142,255,0.5));
+}
+.ps { text-align: center; padding: 2rem 1.5rem; }
+.ps-circle {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--bg-2); border: 1px solid var(--border-bright);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 800;
+  color: var(--coral); margin: 0 auto 1.5rem; position: relative; z-index: 1;
+  box-shadow: 0 0 24px rgba(255,92,56,0.12);
+  transition: all .3s;
+}
+.ps:hover .ps-circle { background: var(--coral); color: white; box-shadow: 0 0 36px rgba(255,92,56,0.4); }
+.ps h3 { font-size: 1.05rem; color: var(--white); margin-bottom: .5rem; }
+.ps p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+/* ── CASE STUDIES ── */
+.cs-card {
+  border-radius: var(--radius); overflow: hidden;
+  background: var(--surface); border: 1px solid var(--border);
+  transition: all .35s;
+}
+.cs-card:hover { transform: translateY(-5px); border-color: var(--border-bright); box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
+.cs-head { padding: 2rem; background: linear-gradient(135deg, rgba(255,92,56,0.08), rgba(75,142,255,0.05)); border-bottom: 1px solid var(--border); }
+.cs-industry { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: .5rem; }
+.cs-head h3 { font-size: 1.2rem; color: var(--white); margin-bottom: 1rem; }
+.cs-stats { display: flex; gap: 1.5rem; }
+.cs-stat-val { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; letter-spacing: -.03em; }
+.cs-stat-label { font-size: .72rem; color: var(--muted); margin-top: .1rem; }
+.cs-body { padding: 1.75rem; }
+.cs-phase { margin-bottom: 1rem; }
+.cs-phase-lbl { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); margin-bottom: .3rem; }
+.cs-phase p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+
+/* ── TESTIMONIALS ── */
+.testi-card-v2 {
+  padding: 2rem; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+  transition: all .3s; position: relative; overflow: hidden;
+}
+.testi-card-v2::before {
+  content: '"'; position: absolute; top: -.5rem; left: 1rem;
+  font-family: Georgia, serif; font-size: 8rem; line-height: 1;
+  color: rgba(255,92,56,0.05); pointer-events: none;
+}
+.testi-card-v2:hover { border-color: var(--border-bright); transform: translateY(-4px); }
+.t-stars { font-size: .9rem; margin-bottom: 1rem; }
+.t-body { font-size: .92rem; color: rgba(255,255,255,.7); line-height: 1.75; font-style: italic; margin-bottom: 1.5rem; }
+.t-author { display: flex; align-items: center; gap: .75rem; }
+.t-av {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), #ff8c55);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 800; color: white; font-size: .95rem;
+  flex-shrink: 0;
+}
+.t-name { font-weight: 600; font-size: .9rem; color: var(--off-white); }
+.t-role { font-size: .78rem; color: var(--muted); }
+
+/* ── LEAD MAGNET ── */
+.audit-section {
+  background: var(--bg-2); position: relative; overflow: hidden;
+}
+.audit-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 50% 80% at 0% 50%, rgba(75,142,255,0.05), transparent),
+    radial-gradient(ellipse 50% 80% at 100% 50%, rgba(255,92,56,0.05), transparent);
+}
+.audit-inner { position: relative; z-index: 1; }
+.audit-perks { display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0; }
+.audit-perk { display: flex; align-items: flex-start; gap: .75rem; }
+.ap-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(0,212,170,0.12); display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; margin-top: 1px; }
+.ap-text h4 { font-size: .9rem; font-weight: 600; color: var(--off-white); margin-bottom: .2rem; }
+.ap-text p { font-size: .82rem; color: var(--muted); }
+.audit-form { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; }
+.form-group { margin-bottom: 1.1rem; }
+.form-group label { display: block; font-size: .78rem; font-weight: 600; letter-spacing: .04em; color: var(--muted); margin-bottom: .4rem; text-transform: uppercase; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 13px 16px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: var(--radius-xs); color: var(--off-white);
+  font-family: var(--font-body); font-size: .9rem;
+  outline: none; transition: border-color .2s, box-shadow .2s; appearance: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: rgba(255,92,56,0.4);
+  box-shadow: 0 0 0 3px rgba(255,92,56,0.08);
+}
+.form-group input::placeholder { color: var(--faint); }
+.form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+.form-group select option { background: var(--bg-2); color: var(--off-white); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,92,56,0.08) 0%, rgba(75,142,255,0.06) 100%);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.final-cta-inner { text-align: center; position: relative; z-index: 1; }
+.final-cta h2 { max-width: 700px; margin: 0 auto 1.5rem; }
+.final-cta p { font-size: 1.05rem; color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.75; }
+.final-cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════
+   ██ SERVICES PAGE
+═══════════════════════════════════════════ */
+.svc-hero { padding: 90px 0 60px; }
+.svc-detail { padding: 80px 0; border-bottom: 1px solid var(--border); }
+.svc-detail:last-child { border-bottom: none; }
+.svc-visual {
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: 24px; height: 380px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.svc-visual-emoji {
+  font-size: 5rem;
+  filter: drop-shadow(0 0 40px rgba(255,92,56,0.3));
+  animation: hero-float 5s ease-in-out infinite;
+}
+.svc-visual::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,92,56,0.06), transparent 70%);
+}
+.outcome-callout {
+  background: linear-gradient(135deg, rgba(0,212,170,0.06), rgba(75,142,255,0.04));
+  border: 1px solid rgba(0,212,170,0.15);
+  border-radius: var(--radius-sm); padding: 1.5rem; margin-top: 1.75rem;
+}
+.outcome-callout h5 { font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); margin-bottom: .5rem; font-weight: 700; }
+.outcome-callout p { font-size: .9rem; color: var(--muted); line-height: 1.65; }
+.svc-features { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0; }
+.svc-feat { background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-size: .78rem; font-weight: 500; padding: 5px 13px; border-radius: 50px; }
+
+/* ═══════════════════════════════════════════
+   ██ CASE STUDIES PAGE
+═══════════════════════════════════════════ */
+.cs-hero-page { padding: 90px 0 60px; }
+.cs-full-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 2rem;
+}
+.cs-full-head {
+  padding: 3rem; display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: center;
+  background: linear-gradient(135deg, rgba(255,92,56,0.06), rgba(75,142,255,0.04));
+  border-bottom: 1px solid var(--border);
+}
+.cs-result-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.cs-result { text-align: center; }
+.cs-result-val { font-family: var(--font-display); font-size: 2rem; font-weight: 800; letter-spacing: -.03em; }
+.cs-result-label { font-size: .75rem; color: var(--muted); margin-top: .2rem; }
+.cs-full-body { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; }
+.cs-phase-block { padding: 2rem; border-right: 1px solid var(--border); }
+.cs-phase-block:last-child { border-right: none; }
+.cs-phase-title { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); margin-bottom: .75rem; display: flex; align-items: center; gap: .4rem; }
+.cs-phase-title::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--coral); }
+.cs-phase-block p { font-size: .875rem; color: var(--muted); line-height: 1.7; }
+
+/* ═══════════════════════════════════════════
+   ██ ABOUT PAGE
+═══════════════════════════════════════════ */
+.about-hero { padding: 90px 0 60px; }
+.about-manifesto {
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: 28px; padding: 4rem;
+  position: relative; overflow: hidden; margin: 60px 0;
+}
+.about-manifesto::before {
+  content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--coral), transparent);
+}
+.team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.team-member {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 2rem; text-align: center;
+  transition: all .3s;
+}
+.team-member:hover { border-color: var(--border-bright); transform: translateY(-4px); }
+.tm-av {
+  width: 90px; height: 90px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), #ff8c55);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: white;
+  margin: 0 auto 1.25rem;
+  box-shadow: 0 0 30px rgba(255,92,56,0.2);
+}
+.tm-av.teal { background: var(--grad-teal); box-shadow: 0 0 30px rgba(0,212,170,0.2); }
+.tm-av.blue { background: linear-gradient(135deg, var(--blue), #8ab4ff); box-shadow: 0 0 30px rgba(75,142,255,0.2); }
+.tm-role { font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--coral); margin: .3rem 0 .75rem; }
+.tm-bio { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+.values-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+.value-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 2rem;
+  transition: all .3s;
+}
+.value-card:hover { border-color: var(--border-bright); transform: translateY(-4px); }
+.vc-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+.vc-title { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: .5rem; font-family: var(--font-display); }
+.vc-desc { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+
+/* ═══════════════════════════════════════════
+   ██ BLOG PAGE
+═══════════════════════════════════════════ */
+.blog-hero { padding: 90px 0 60px; }
+.blog-featured-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 3rem;
+  transition: all .3s;
+}
+.blog-featured-card:hover { border-color: var(--border-bright); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.blog-feature-img {
+  min-height: 300px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, rgba(255,92,56,0.1), rgba(75,142,255,0.1));
+  font-size: 5rem; position: relative;
+}
+.blog-feature-body { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+.blog-meta { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.blog-cat { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--coral); }
+.blog-date { font-size: .75rem; color: var(--faint); }
+.blog-read-time { font-size: .75rem; color: var(--faint); }
+.blog-feature-body h2 { font-size: clamp(1.5rem, 2.5vw, 2.2rem); margin-bottom: 1rem; }
+.blog-feature-body p { font-size: .9rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+.blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.blog-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; transition: all .3s;
+}
+.blog-card:hover { border-color: var(--border-bright); transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+.blog-card-img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+.blog-card-body { padding: 1.5rem; }
+.blog-card-body h3 { font-size: 1.05rem; color: var(--white); margin: .5rem 0 .75rem; }
+.blog-card-body p { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+.blog-card-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.blog-newsletter {
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 3rem;
+  text-align: center; margin-top: 4rem;
+}
+
+/* ═══════════════════════════════════════════
+   ██ CONTACT PAGE
+═══════════════════════════════════════════ */
+.contact-hero { padding: 90px 0 60px; }
+.contact-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; }
+.contact-info-section { margin-bottom: 2rem; }
+.contact-info-section h3 { font-size: 1.05rem; color: var(--off-white); margin-bottom: 1rem; }
+.contact-item {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 1rem 1.25rem; margin-bottom: .75rem;
+  text-decoration: none; color: var(--off-white); transition: all .2s;
+}
+.contact-item:hover { background: var(--surface-hover); border-color: rgba(255,92,56,0.25); }
+.ci-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,92,56,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.ci-text strong { display: block; font-size: .9rem; font-weight: 600; }
+.ci-text span { font-size: .78rem; color: var(--muted); }
+.wa-button {
+  display: flex; align-items: center; gap: .75rem;
+  background: #25d366; color: white;
+  border-radius: var(--radius-sm); padding: 14px 20px;
+  text-decoration: none; font-weight: 700; font-size: .9rem;
+  transition: all .2s; margin-top: .75rem; justify-content: center;
+}
+.wa-button:hover { background: #1db954; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+.cal-embed {
+  background: linear-gradient(135deg, rgba(0,212,170,0.05), rgba(75,142,255,0.05));
+  border: 1px solid rgba(0,212,170,0.15); border-radius: var(--radius);
+  padding: 2rem; text-align: center; margin-top: .75rem;
+}
+.cal-embed p { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
+.resp-badges { display: flex; flex-direction: column; gap: .5rem; margin-top: .75rem; }
+.resp-badge { display: flex; justify-content: space-between; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 10px 14px; font-size: .82rem; }
+.contact-form-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 2.5rem;
+}
+.contact-form-card h3 { margin-bottom: .5rem; }
+.contact-form-card > p { font-size: .88rem; color: var(--muted); margin-bottom: 2rem; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  padding: 80px 0 40px;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+.footer-brand .nav-logo { display: inline-block; margin-bottom: 1rem; font-size: 1.4rem; }
+.footer-brand p { font-size: .875rem; color: var(--muted); line-height: 1.7; max-width: 280px; margin-bottom: 1.5rem; }
+.footer-col h5 { font-family: var(--font-display); font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); margin-bottom: 1.25rem; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: .7rem; }
+.footer-col ul li a { font-size: .875rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+.footer-col ul li a:hover { color: var(--off-white); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { font-size: .8rem; color: var(--faint); }
+.social-icons { display: flex; gap: .5rem; }
+.si {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: .8rem; font-weight: 700;
+  text-decoration: none; transition: all .2s;
+}
+.si:hover { background: rgba(255,92,56,0.12); border-color: rgba(255,92,56,0.3); color: var(--coral); }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+.fade-in { opacity: 0; transform: translateY(28px); transition: opacity .65s, transform .65s; }
+.fade-in.visible { opacity: 1; transform: none; }
+.d1 { transition-delay: .1s; }
+.d2 { transition-delay: .2s; }
+.d3 { transition-delay: .3s; }
+.d4 { transition-delay: .4s; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .g2 { grid-template-columns: 1fr; }
+  .g3 { grid-template-columns: repeat(2,1fr); }
+  .g4 { grid-template-columns: repeat(2,1fr); }
+  .process-line { grid-template-columns: repeat(2,1fr); }
+  .process-line::before { display: none; }
+  .testi-grid { grid-template-columns: repeat(2,1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .svc-detail .g2 > div:first-child { order: 1; }
+  .svc-detail.flip .g2 > div:first-child { order: 2; }
+  .svc-detail.flip .g2 > div:last-child { order: 1; }
+  .cs-full-head { grid-template-columns: 1fr; }
+  .cs-full-body { grid-template-columns: 1fr; }
+  .cs-phase-block { border-right: none; border-bottom: 1px solid var(--border); }
+  .cs-phase-block:last-child { border-bottom: none; }
+  .blog-featured-card { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: repeat(2,1fr); }
+  .team-grid { grid-template-columns: repeat(2,1fr); }
+  .contact-grid { grid-template-columns: 1fr; }
+  .dash-float-1, .dash-float-2 { display: none; }
+}
+@media (max-width: 640px) {
+  .nav-center { display: none; }
+  .nav-right .btn-ghost { display: none; }
+  .hamburger { display: flex; }
+  h1 { font-size: 2.6rem; }
+  h2 { font-size: 2rem; }
+  .g3 { grid-template-columns: 1fr; }
+  .g4 { grid-template-columns: 1fr; }
+  .problems-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-metric { padding: 1.5rem; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .process-line { grid-template-columns: 1fr; }
+  .about-manifesto { padding: 2rem; }
+  .audit-section .g2 { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .hero-metrics-wrap { margin-top: 3rem; }
+  .hero-metric { flex: 0 0 50%; border: none; border-bottom: 1px solid var(--border); }
+  .final-cta-actions { flex-direction: column; align-items: center; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .cs-result-grid { grid-template-columns: 1fr; }
+  .cs-stats { gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── AMBIENT BACKGROUND ── -->
+<div class="mesh-bg" aria-hidden="true">
+  <div class="mesh-orb mesh-orb-1"></div>
+  <div class="mesh-orb mesh-orb-2"></div>
+  <div class="mesh-orb mesh-orb-3"></div>
+</div>
+<div class="grid-overlay" aria-hidden="true"></div>
+
+<!-- ── NAVIGATION ── -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#" onclick="goPage('home');return false;">Digito<em>logics</em></a>
+  <ul class="nav-center">
+    <li><a href="#" onclick="goPage('home');return false;" data-pg="home">Home</a></li>
+    <li><a href="#" onclick="goPage('services');return false;" data-pg="services">Services</a></li>
+    <li><a href="#" onclick="goPage('cases');return false;" data-pg="cases">Case Studies</a></li>
+    <li><a href="#" onclick="goPage('about');return false;" data-pg="about">About</a></li>
+    <li><a href="#" onclick="goPage('blog');return false;" data-pg="blog">Insights</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="btn-ghost" onclick="goPage('contact');return false;">Contact</a>
+    <a href="#" class="btn-coral" onclick="goPage('contact');return false;">Book a Call</a>
+  </div>
+  <button class="hamburger" onclick="toggleMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#" onclick="goPage('home');toggleMobile();return false;">Home</a>
+  <a href="#" onclick="goPage('services');toggleMobile();return false;">Services</a>
+  <a href="#" onclick="goPage('cases');toggleMobile();return false;">Case Studies</a>
+  <a href="#" onclick="goPage('about');toggleMobile();return false;">About</a>
+  <a href="#" onclick="goPage('blog');toggleMobile();return false;">Insights</a>
+  <a href="#" onclick="goPage('contact');toggleMobile();return false;" class="btn-coral" style="display:inline-flex;align-items:center;justify-content:center;padding:14px;border-radius:12px;font-weight:700">Book a Free Strategy Call →</a>
+</div>
+
+<!-- ════════════════════════════════════════
+     ██ HOME PAGE
+════════════════════════════════════════ -->
+<div class="page active" id="pg-home">
+
+  <!-- Scarcity Bar -->
+  <div class="scarcity-bar">
+    🔥 <em>Only 3 project spots remaining</em> for Q3 2025 — <a href="#" onclick="goPage('contact');return false;" style="color:var(--coral);font-weight:700;text-decoration:underline">Reserve yours now</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-tag fade-in">
+          <span class="eyebrow">Results-Driven Digital Agency</span>
+          <span class="badge badge-green">✦ Taking New Clients</span>
+        </div>
+        <h1 class="text-white fade-in d1">
+          Websites & Funnels That<br><span class="coral-text">Turn Visitors</span><br>Into Customers.
+        </h1>
+        <p class="hero-sub fade-in d2">We build high-converting digital systems for coaches, course creators, and online businesses that are serious about growth — not just a pretty website.</p>
+        <div class="hero-actions fade-in d3">
+          <a href="#" class="btn btn-primary btn-lg" onclick="goPage('contact');return false;">
+            📅 Book a Strategy Call <span class="arrow-icon">→</span>
+          </a>
+          <a href="#" class="btn btn-secondary btn-lg" onclick="document.getElementById('audit-section').scrollIntoView({behavior:'smooth'});return false;">
+            Get Free Website Audit
+          </a>
+        </div>
+
+        <!-- Dashboard visual -->
+        <div class="hero-dashboard fade-in d4" style="margin-top:4rem">
+          <div class="dash-card">
+            <div class="dash-header">
+              <span class="dash-title">Revenue Dashboard</span>
+              <span class="badge badge-green">↑ Live</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:1rem">
+              <div>
+                <div style="font-size:.78rem;color:var(--muted)">This Month</div>
+                <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;letter-spacing:-.03em;color:white">$64,200</div>
+              </div>
+              <span class="badge badge-green" style="align-self:flex-start">+312% vs before</span>
+            </div>
+            <div class="dash-chart">
+              <svg viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ff5c38" stop-opacity=".25"/>
+                    <stop offset="100%" stop-color="#ff5c38" stop-opacity="0"/>
+                  </linearGradient>
+                  <linearGradient id="gr2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#00d4aa" stop-opacity=".15"/>
+                    <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,75 C40,70 80,65 120,55 C160,45 200,50 240,38 C280,26 320,15 360,8 L380,5 L400,3" stroke="#ff5c38" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path d="M0,75 C40,70 80,65 120,55 C160,45 200,50 240,38 C280,26 320,15 360,8 L380,5 L400,3 L400,100 L0,100Z" fill="url(#gr)"/>
+                <path d="M0,90 C40,88 80,85 120,80 C160,75 200,72 240,68 C280,64 320,60 360,55 L400,52" stroke="rgba(0,212,170,0.4)" stroke-width="1.5" stroke-dasharray="4,4" fill="none"/>
+              </svg>
+            </div>
+            <div class="dash-row">
+              <div class="dash-kpi"><h4>312</h4><span>Leads / month</span></div>
+              <div class="dash-kpi"><h4>14.8%</h4><span>Conv. rate</span></div>
+              <div class="dash-kpi"><h4>4.8×</h4><span>ROAS</span></div>
+            </div>
+          </div>
+          <div class="dash-float-1">
+            <div class="fi fi-green">🚀</div>
+            <div><div style="font-weight:700;font-size:.82rem;color:white">Funnel launched</div><div style="color:var(--muted);font-size:.72rem">+340% conversions</div></div>
+          </div>
+          <div class="dash-float-2">
+            <div class="fi fi-coral">📅</div>
+            <div><div style="font-weight:700;font-size:.82rem;color:white">Strategy call booked</div><div style="color:var(--muted);font-size:.72rem">Today at 3:00 PM</div></div>
+          </div>
+        </div>
+
+        <!-- Metrics bar -->
+        <div class="hero-metrics-wrap fade-in d4">
+          <div class="hero-metrics">
+            <div class="hero-metric">
+              <div class="hm-val">200<span>+</span></div>
+              <div class="hm-label">Projects Delivered</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hm-val">15<span>+</span></div>
+              <div class="hm-label">Countries Served</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hm-val">$4.2<span>M</span></div>
+              <div class="hm-label">Revenue Generated for Clients</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hm-val">4.9<span>★</span></div>
+              <div class="hm-label">Average Client Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logos -->
+  <section class="logos-section">
+    <div class="container">
+      <p class="logos-label">Trusted by ambitious businesses worldwide</p>
+      <div class="logos-row">
+        <span class="logo-name">CoachPro</span>
+        <span class="logo-name">EduLaunch</span>
+        <span class="logo-name">FunnelBridge</span>
+        <span class="logo-name">ScaleUp™</span>
+        <span class="logo-name">MindsetCo</span>
+        <span class="logo-name">GrowthOS</span>
+        <span class="logo-name">CreatorHub</span>
+        <span class="logo-name">AcademyX</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="section">
+    <div class="container">
+      <div class="sh fade-in">
+        <span class="eyebrow">Sound Familiar?</span>
+        <h2 class="text-white mt-1">You're not getting results <br>from your digital presence</h2>
+        <p>Most businesses have a digital presence — very few have a digital <em>strategy</em>. Here's what's quietly costing you revenue every single day.</p>
+      </div>
+      <div class="problems-grid">
+        <div class="problem-card glass-glow fade-in">
+          <div class="problem-num">01</div>
+          <h4>Your website looks good but converts terribly</h4>
+          <p>Visitors arrive, glance around, and leave. No clear call-to-action. No compelling reason to stay. Just a digital brochure gathering dust.</p>
+        </div>
+        <div class="problem-card glass-glow fade-in d1">
+          <div class="problem-num">02</div>
+          <h4>You have traffic but no funnel to capture it</h4>
+          <p>Traffic without a structured sales path is just noise. Without a funnel, you're leaving 95% of your potential revenue on the table.</p>
+        </div>
+        <div class="problem-card glass-glow fade-in d2">
+          <div class="problem-num">03</div>
+          <h4>Your user experience is driving clients away</h4>
+          <p>Slow load times, confusing navigation, and poor mobile experience signal unprofessionalism — before a prospect even reads a single word.</p>
+        </div>
+        <div class="problem-card glass-glow fade-in d3">
+          <div class="problem-num">04</div>
+          <h4>No automated system to nurture and close leads</h4>
+          <p>You're manually following up, losing leads who go cold, and leaving money uncaptured from an audience you've already paid to acquire.</p>
+        </div>
+      </div>
+      <div class="solution-bridge fade-in mt-3">
+        <p style="font-size:.9rem;color:var(--muted);margin-bottom:1rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600">THE DIGITOLOGICS DIFFERENCE</p>
+        <h3 class="text-white" style="font-size:1.6rem;margin-bottom:1rem">We don't build websites. We build revenue engines.</h3>
+        <p style="color:var(--muted);font-size:.95rem;max-width:560px;margin:0 auto 2rem;line-height:1.75">Every asset we create is engineered around conversion psychology, buyer journeys, and measurable business outcomes — not awards, aesthetics, or agency portfolios.</p>
+        <a href="#" class="btn btn-primary" onclick="goPage('services');return false;">See Our Solutions <span class="arrow-icon">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section" style="background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="container">
+      <div class="sh centered fade-in">
+        <span class="eyebrow">What We Build</span>
+        <h2 class="text-white mt-1">Five systems. One mission: <br>your growth.</h2>
+        <p>Each service is designed to solve a specific revenue problem and deliver a measurable business outcome.</p>
+      </div>
+      <div class="g3" style="grid-template-columns:repeat(3,1fr)">
+        <div class="service-card-v2 fade-in">
+          <div class="sc-icon">🌐</div>
+          <div class="sc-problem">Problem → No leads from website</div>
+          <h3 class="text-white">Website Development</h3>
+          <p class="sc-solution">Conversion-optimised websites built around your buyer's psychology — fast, mobile-first, and engineered to generate leads, not just impressions.</p>
+          <div class="sc-outcome">Visitors become enquiries, enquiries become clients.</div>
+        </div>
+        <div class="service-card-v2 fade-in d1">
+          <div class="sc-icon">🎯</div>
+          <div class="sc-problem">Problem → Traffic without sales</div>
+          <h3 class="text-white">Sales Funnel Creation</h3>
+          <p class="sc-solution">Multi-step funnels with strategic lead magnets, VSLs, email sequences, and upsells that guide cold traffic to purchase — automatically.</p>
+          <div class="sc-outcome">Cold traffic converts into predictable monthly revenue.</div>
+        </div>
+        <div class="service-card-v2 fade-in d2">
+          <div class="sc-icon">📚</div>
+          <div class="sc-problem">Problem → Knowledge stuck in 1:1</div>
+          <h3 class="text-white">Course Platform Setup</h3>
+          <p class="sc-solution">Branded course and membership platforms with payment integration, content drip, and onboarding flows that deliver a premium learning experience.</p>
+          <div class="sc-outcome">Scale your expertise into passive, recurring income.</div>
+        </div>
+        <div class="service-card-v2 fade-in">
+          <div class="sc-icon">✏️</div>
+          <div class="sc-problem">Problem → Design that doesn't convert</div>
+          <h3 class="text-white">UI/UX Design</h3>
+          <p class="sc-solution">Conversion-led interface design that creates trust, reduces friction, and strategically moves users toward the action you need them to take.</p>
+          <div class="sc-outcome">Every element earns its place by driving measurable action.</div>
+        </div>
+        <div class="service-card-v2 fade-in d1">
+          <div class="sc-icon">⚙️</div>
+          <div class="sc-problem">Problem → Manual follow-up burning hours</div>
+          <h3 class="text-white">Digital Automation Systems</h3>
+          <p class="sc-solution">CRM setup, email sequences, lead scoring, retargeting systems, and reporting dashboards that nurture and close leads while you focus on delivery.</p>
+          <div class="sc-outcome">Your business generates revenue while you sleep.</div>
+        </div>
+        <div class="service-card-v2 fade-in d2" style="background:linear-gradient(135deg,rgba(255,92,56,0.08),rgba(255,92,56,0.04));border-color:rgba(255,92,56,0.2);display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div style="font-size:2.5rem;margin-bottom:1.25rem">🔥</div>
+            <h3 class="text-white">Not sure what you need?</h3>
+            <p class="sc-solution" style="margin-top:.75rem">Book a free 30-minute strategy call. We'll audit your current setup and prescribe exactly what will move the needle.</p>
+          </div>
+          <a href="#" class="btn btn-primary" style="margin-top:2rem;align-self:flex-start" onclick="goPage('contact');return false;">Book Free Audit →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section class="section">
+    <div class="container">
+      <div class="flex-between sh fade-in" style="margin-bottom:3rem">
+        <div>
+          <span class="eyebrow">Proof of Work</span>
+          <h2 class="text-white mt-1">Results that speak louder<br>than promises.</h2>
+        </div>
+        <a href="#" class="btn btn-secondary" onclick="goPage('cases');return false;">All Case Studies →</a>
+      </div>
+      <div class="g3">
+        <div class="cs-card fade-in">
+          <div class="cs-head">
+            <div class="cs-industry">Executive Coaching</div>
+            <h3>Leadership coach triples revenue in 90 days</h3>
+            <div class="cs-stats">
+              <div><div class="cs-stat-val text-coral">340%</div><div class="cs-stat-label">Conv. increase</div></div>
+              <div><div class="cs-stat-val text-teal">$22K</div><div class="cs-stat-label">Added MRR</div></div>
+            </div>
+          </div>
+          <div class="cs-body">
+            <div class="cs-phase"><div class="cs-phase-lbl">Challenge</div><p>Beautiful website, 2 leads per month, zero funnel, no email list.</p></div>
+            <div class="cs-phase"><div class="cs-phase-lbl">Solution</div><p>Rebuilt site + 5-step application funnel + 10-email nurture sequence + CRM automation.</p></div>
+            <div class="cs-phase"><div class="cs-phase-lbl">Results</div><p>Calendar fully booked 6 weeks ahead within 90 days. $22K new MRR. Waitlist opened.</p></div>
+          </div>
+        </div>
+        <div class="cs-card fade-in d1">
+          <div class="cs-head" style="background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(75,142,255,0.06))">
+            <div class="cs-industry">Online Education</div>
+            <h3>Course creator achieves $180K in 14-day launch</h3>
+            <div class="cs-stats">
+              <div><div class="cs-stat-val text-teal">$180K</div><div class="cs-stat-label">Launch revenue</div></div>
+              <div><div class="cs-stat-val" style="color:var(--blue)">2,400</div><div class="cs-stat-label">Students enrolled</div></div>
+            </div>
+          </div>
+          <div class="cs-body">
+            <div class="cs-phase"><div class="cs-phase-lbl">Challenge</div><p>Large Instagram following, $3,200 course launch on Gumroad, no funnel infrastructure.</p></div>
+            <div class="cs-phase"><div class="cs-phase-lbl">Solution</div><p>Kajabi platform build + launch funnel + VSL + webinar sequence + checkout upsell stack.</p></div>
+            <div class="cs-phase"><div class="cs-phase-lbl">Results</div><p>$180K in 14 days. 18% order bump rate. 220 premium upgrades. List 1.1K → 8.7K.</p></div>
+          </div>
+        </div>
+        <div class="cs-card fade-in d2">
+          <div class="cs-head" style="background:linear-gradient(135deg,rgba(75,142,255,0.08),rgba(255,92,56,0.05))">
+            <div class="cs-industry">B2B SaaS</div>
+            <h3>SaaS startup 5× demo bookings after site overhaul</h3>
+            <div class="cs-stats">
+              <div><div class="cs-stat-val" style="color:var(--amber)">500%</div><div class="cs-stat-label">More demos</div></div>
+              <div><div class="cs-stat-val text-teal">38%</div><div class="cs-stat-label">Trial-to-paid</div></div>
+            </div>
+          </div>
+          <div class="cs-body">
+            <div class="cs-phase"><div class="cs-phase-lbl">Challenge</div><p>76% bounce rate. 4 demo bookings/week. Enterprise clients not taking them seriously.</p></div>
+            <div class="cs-phase"><div class="cs-phase-lbl">Solution</div><p>Full Webflow redesign + messaging hierarchy + interactive product demo + HubSpot CRM.</p></div>
+            <div class="cs-phase"><div class="cs-phase-lbl">Results</div><p>Bounce: 76%→34%. Demos: 4→24/wk. Trial-to-paid: 11%→38%. Seed round closed.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section process-section">
+    <div class="container">
+      <div class="sh centered fade-in">
+        <span class="eyebrow">How We Work</span>
+        <h2 class="text-white mt-1">Four steps from strategy<br>to scaled revenue.</h2>
+        <p>A battle-tested delivery framework. No surprises, no delays — just a clear path from where you are to where you want to be.</p>
+      </div>
+      <div class="process-line">
+        <div class="ps fade-in">
+          <div class="ps-circle">01</div>
+          <h3>Discovery</h3>
+          <p>Deep dive into your business goals, audience, funnel gaps, and competitive landscape.</p>
+        </div>
+        <div class="ps fade-in d1">
+          <div class="ps-circle">02</div>
+          <h3>Strategy</h3>
+          <p>We map your full customer journey and design a conversion architecture built around your goals.</p>
+        </div>
+        <div class="ps fade-in d2">
+          <div class="ps-circle">03</div>
+          <h3>Development</h3>
+          <p>Precision build — clean code, persuasive copy, pixel-perfect design, and thorough QA.</p>
+        </div>
+        <div class="ps fade-in d3">
+          <div class="ps-circle">04</div>
+          <h3>Launch & Scale</h3>
+          <p>Go live, track, iterate. We don't disappear after launch — we help you compound results.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section">
+    <div class="container">
+      <div class="sh centered fade-in">
+        <span class="eyebrow">Client Stories</span>
+        <h2 class="text-white mt-1">We measure success in<br>client outcomes.</h2>
+      </div>
+      <div class="g3 testi-grid">
+        <div class="testi-card-v2 fade-in">
+          <div class="t-stars">⭐⭐⭐⭐⭐</div>
+          <p class="t-body">"Digitologics completely transformed my business. Within 60 days of our new funnel going live, my calendar was fully booked for 6 weeks. I went from chasing clients to turning them away."</p>
+          <div class="t-author">
+            <div class="t-av">AK</div>
+            <div><div class="t-name">Amira Khalil</div><div class="t-role">Executive Coach, Dubai</div></div>
+          </div>
+        </div>
+        <div class="testi-card-v2 fade-in d1">
+          <div class="t-stars">⭐⭐⭐⭐⭐</div>
+          <p class="t-body">"The course platform and launch funnel they built generated $180K in 14 days. I'd worked with other agencies — none came remotely close. These guys are the real deal."</p>
+          <div class="t-author">
+            <div class="t-av" style="background:linear-gradient(135deg,#00d4aa,#00b4ff)">JM</div>
+            <div><div class="t-name">James Morrison</div><div class="t-role">Online Educator & Creator</div></div>
+          </div>
+        </div>
+        <div class="testi-card-v2 fade-in d2">
+          <div class="t-stars">⭐⭐⭐⭐⭐</div>
+          <p class="t-body">"Professional, fast, and 100% focused on ROI. Our demo bookings went from 4 to 24 per week. That website redesign directly contributed to us closing our seed round."</p>
+          <div class="t-author">
+            <div class="t-av" style="background:linear-gradient(135deg,#4b8eff,#8ab4ff)">SR</div>
+            <div><div class="t-name">Sofia Rodriguez</div><div class="t-role">Co-Founder, GrowthOS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lead Magnet / Audit -->
+  <section class="section audit-section" id="audit-section">
+    <div class="container audit-inner">
+      <div class="g2">
+        <div class="fade-in">
+          <span class="eyebrow">Free Offer</span>
+          <h2 class="text-white mt-1" style="font-size:clamp(2rem,3.5vw,2.8rem)">Get your Free Website & Funnel Audit</h2>
+          <p style="color:var(--muted);margin:1.25rem 0 2rem;font-size:1rem;line-height:1.75">In 24 hours, we'll review your entire digital presence and send you a detailed report identifying exactly what's costing you leads and revenue — completely free.</p>
+          <div class="audit-perks">
+            <div class="audit-perk">
+              <div class="ap-icon">📊</div>
+              <div class="ap-text"><h4>Full Conversion Analysis</h4><p>We score every page against 23 conversion checkpoints.</p></div>
+            </div>
+            <div class="audit-perk">
+              <div class="ap-icon">🎨</div>
+              <div class="ap-text"><h4>UX & Design Review</h4><p>Identify where your UI is creating friction and losing sales.</p></div>
+            </div>
+            <div class="audit-perk">
+              <div class="ap-icon">🚀</div>
+              <div class="ap-text"><h4>Prioritised Improvements</h4><p>Ranked list of quick-wins and strategic upgrades to implement immediately.</p></div>
+            </div>
+            <div class="audit-perk">
+              <div class="ap-icon">💡</div>
+              <div class="ap-text"><h4>Funnel Gap Identification</h4><p>See exactly where leads are dropping off and how to fix it.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="audit-form fade-in d2">
+          <h3 class="text-white" style="margin-bottom:.4rem">Request Your Free Audit</h3>
+          <p style="font-size:.85rem;color:var(--muted);margin-bottom:1.75rem">We'll analyse your site and deliver a personalised report within 24 hours. No obligation.</p>
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="John"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+          </div>
+          <div class="form-group"><label>Work Email *</label><input type="email" placeholder="john@yourcompany.com"></div>
+          <div class="form-group"><label>Website URL *</label><input type="text" placeholder="https://yoursite.com"></div>
+          <div class="form-group">
+            <label>Business Type</label>
+            <select>
+              <option value="">Select...</option>
+              <option>Coach / Consultant</option>
+              <option>Course Creator</option>
+              <option>Online Business</option>
+              <option>SaaS / Startup</option>
+              <option>Service Agency</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Monthly Revenue Range</label>
+            <select>
+              <option value="">Select range</option>
+              <option>Pre-revenue</option>
+              <option>$0 – $5K/mo</option>
+              <option>$5K – $25K/mo</option>
+              <option>$25K – $100K/mo</option>
+              <option>$100K+/mo</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="handleAudit(this)">
+            🔍 Send Me My Free Audit Report
+          </button>
+          <p style="font-size:.75rem;color:var(--faint);text-align:center;margin-top:.75rem">🔒 100% confidential. No spam. No sales pressure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section final-cta">
+    <div class="container final-cta-inner">
+      <span class="eyebrow fade-in">Limited Availability</span>
+      <h2 class="text-white mt-1 fade-in" style="margin-bottom:0">Ready to turn your website into a<br><span class="coral-text">powerful growth engine?</span></h2>
+      <p class="fade-in d1">We only take on a limited number of new clients each quarter to ensure exceptional quality. <br><strong style="color:var(--off-white)">3 spots remaining for Q3 2025.</strong></p>
+      <div class="final-cta-actions fade-in d2">
+        <a href="#" class="btn btn-primary btn-lg" onclick="goPage('contact');return false;">📅 Book a Strategy Call <span class="arrow-icon">→</span></a>
+        <a href="#" class="btn btn-secondary btn-lg" onclick="goPage('contact');return false;">Start Your Project</a>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /home -->
+
+
+<!-- ════════════════════════════════════════
+     ██ SERVICES PAGE
+════════════════════════════════════════ -->
+<div class="page" id="pg-services">
+  <section class="svc-hero">
+    <div class="container">
+      <span class="eyebrow fade-in">Our Services</span>
+      <h1 class="text-white mt-1 fade-in" style="max-width:700px">Digital solutions built<br>for <span class="coral-text">real revenue</span>.</h1>
+      <p style="font-size:1.1rem;color:var(--muted);max-width:540px;margin-top:1.25rem;line-height:1.75" class="fade-in">Every service is designed around one outcome — moving more qualified visitors to take profitable action. No fluff. No vanity metrics.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- 01 Website Dev -->
+    <div class="svc-detail g2">
+      <div class="fade-in">
+        <span class="eyebrow">01 — Website Development</span>
+        <h2 class="text-white mt-1">Websites built to convert, not impress</h2>
+        <p style="color:var(--muted);margin:1.25rem 0;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Client problem:</strong> Most business websites look professional but fail to generate a single qualified lead. They're expensive brochures with no strategy behind them.</p>
+        <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Our solution:</strong> We build websites around buyer psychology — strategic copy structure, social proof placement, micro-conversion flows, and frictionless UX that guides visitors toward becoming leads.</p>
+        <div class="svc-features">
+          <span class="svc-feat">Custom WordPress</span><span class="svc-feat">Webflow</span><span class="svc-feat">Next.js</span><span class="svc-feat">SEO-optimised</span><span class="svc-feat">Core Web Vitals</span><span class="svc-feat">Mobile-first</span><span class="svc-feat">CRO strategy</span>
+        </div>
+        <div class="outcome-callout">
+          <h5>📈 Expected Business Outcome</h5>
+          <p>Clients typically see a 2–5× increase in enquiry volume within 90 days of launch, with meaningful reduction in bounce rate and increase in session duration and pages per visit.</p>
+        </div>
+        <a href="#" class="btn btn-primary mt-2" onclick="goPage('contact');return false;">Start Your Website →</a>
+      </div>
+      <div class="svc-visual fade-in d1"><div class="svc-visual-emoji">🌐</div></div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 02 Funnels -->
+    <div class="svc-detail g2 flip">
+      <div class="svc-visual fade-in"><div class="svc-visual-emoji">🎯</div></div>
+      <div class="fade-in d1">
+        <span class="eyebrow">02 — Sales Funnel Creation</span>
+        <h2 class="text-white mt-1">Funnels that sell while you sleep</h2>
+        <p style="color:var(--muted);margin:1.25rem 0;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Client problem:</strong> Traffic and social media aren't translating into consistent revenue because there's no structured path from interest to purchase.</p>
+        <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Our solution:</strong> We architect multi-step funnels — from opt-in to lead magnet to tripwire to core offer to upsell — each page purpose-built to advance your buyer one step closer to yes.</p>
+        <div class="svc-features">
+          <span class="svc-feat">ClickFunnels</span><span class="svc-feat">GoHighLevel</span><span class="svc-feat">Custom HTML/CSS</span><span class="svc-feat">Email sequences</span><span class="svc-feat">VSL pages</span><span class="svc-feat">Order bumps</span><span class="svc-feat">A/B testing</span>
+        </div>
+        <div class="outcome-callout">
+          <h5>📈 Expected Business Outcome</h5>
+          <p>Expect a minimum 2× improvement in conversion rate within 30 days. Most clients recover their full investment inside the first funnel launch cycle.</p>
+        </div>
+        <a href="#" class="btn btn-primary mt-2" onclick="goPage('contact');return false;">Build My Funnel →</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 03 Course -->
+    <div class="svc-detail g2">
+      <div class="fade-in">
+        <span class="eyebrow">03 — Course Platform Setup</span>
+        <h2 class="text-white mt-1">Turn expertise into passive income</h2>
+        <p style="color:var(--muted);margin:1.25rem 0;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Client problem:</strong> Coaches and experts are trapped in 1:1 work. Their knowledge has far more leverage potential, but they lack the infrastructure to deliver and monetize it at scale.</p>
+        <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Our solution:</strong> We build branded course and membership platforms with seamless enrollment flows, Stripe payments, content drip, progress tracking, community features, and full launch funnels.</p>
+        <div class="svc-features">
+          <span class="svc-feat">Kajabi</span><span class="svc-feat">Teachable</span><span class="svc-feat">Custom LMS</span><span class="svc-feat">Stripe integration</span><span class="svc-feat">Drip content</span><span class="svc-feat">Certificates</span><span class="svc-feat">Community</span>
+        </div>
+        <div class="outcome-callout">
+          <h5>📈 Expected Business Outcome</h5>
+          <p>Transform expertise into predictable passive revenue. Our clients regularly achieve $50K–$200K in course launch revenue with the full build + launch system.</p>
+        </div>
+        <a href="#" class="btn btn-primary mt-2" onclick="goPage('contact');return false;">Launch My Course →</a>
+      </div>
+      <div class="svc-visual fade-in d1"><div class="svc-visual-emoji">📚</div></div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 04 UI/UX -->
+    <div class="svc-detail g2 flip">
+      <div class="svc-visual fade-in"><div class="svc-visual-emoji">✏️</div></div>
+      <div class="fade-in d1">
+        <span class="eyebrow">04 — UI/UX Design</span>
+        <h2 class="text-white mt-1">Design that works as hard as you do</h2>
+        <p style="color:var(--muted);margin:1.25rem 0;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Client problem:</strong> Interfaces are failing to build trust or drive action. Generic templates and over-designed pages confuse visitors rather than guiding them.</p>
+        <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Our solution:</strong> We blend conversion psychology with intentional visual design — every element, layout decision, and interaction earns its place by nudging users toward the desired action.</p>
+        <div class="svc-features">
+          <span class="svc-feat">Figma</span><span class="svc-feat">Design systems</span><span class="svc-feat">Wireframing</span><span class="svc-feat">Prototyping</span><span class="svc-feat">User testing</span><span class="svc-feat">WCAG accessibility</span>
+        </div>
+        <div class="outcome-callout">
+          <h5>📈 Expected Business Outcome</h5>
+          <p>Consistent measurable uplift in CTR, form completions, and session duration — design that reliably outperforms industry benchmarks.</p>
+        </div>
+        <a href="#" class="btn btn-primary mt-2" onclick="goPage('contact');return false;">Redesign My Experience →</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 05 Automation -->
+    <div class="svc-detail g2" style="border-bottom:none">
+      <div class="fade-in">
+        <span class="eyebrow">05 — Digital Automation Systems</span>
+        <h2 class="text-white mt-1">Automate your path to revenue</h2>
+        <p style="color:var(--muted);margin:1.25rem 0;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Client problem:</strong> Leads fall through the cracks because of slow manual follow-up. Money is left on the table from an audience that's already been paid to acquire.</p>
+        <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.75;font-size:.95rem"><strong style="color:var(--off-white)">Our solution:</strong> End-to-end marketing systems — CRM configuration, lead scoring, multi-channel email sequences, SMS automation, retargeting pixels, and live reporting dashboards.</p>
+        <div class="svc-features">
+          <span class="svc-feat">GoHighLevel</span><span class="svc-feat">HubSpot</span><span class="svc-feat">ActiveCampaign</span><span class="svc-feat">Zapier</span><span class="svc-feat">Make.com</span><span class="svc-feat">GA4 + Dashboards</span>
+        </div>
+        <div class="outcome-callout">
+          <h5>📈 Expected Business Outcome</h5>
+          <p>Cut manual sales time by 60%+, reduce lead response time from hours to minutes, and increase follow-up conversions by an average of 4×.</p>
+        </div>
+        <a href="#" class="btn btn-primary mt-2" onclick="goPage('contact');return false;">Automate My Business →</a>
+      </div>
+      <div class="svc-visual fade-in d1"><div class="svc-visual-emoji">⚙️</div></div>
+    </div>
+  </div>
+
+  <section class="section final-cta" style="margin-top:2rem">
+    <div class="container final-cta-inner">
+      <h2 class="text-white fade-in">Not sure which service fits?<br><span class="coral-text">Let's figure it out together.</span></h2>
+      <p class="fade-in d1">Book a free 30-min strategy call. No pressure, no pitch — just a genuine conversation about what will actually move your business forward.</p>
+      <div class="final-cta-actions fade-in d2">
+        <a href="#" class="btn btn-primary btn-lg" onclick="goPage('contact');return false;">Book Free Strategy Call →</a>
+      </div>
+    </div>
+  </section>
+</div><!-- /services -->
+
+
+<!-- ════════════════════════════════════════
+     ██ CASE STUDIES PAGE
+════════════════════════════════════════ -->
+<div class="page" id="pg-cases">
+  <section class="cs-hero-page">
+    <div class="container">
+      <span class="eyebrow fade-in">Case Studies</span>
+      <h1 class="text-white mt-1 fade-in" style="max-width:700px">The proof is in<br>the <span class="coral-text">numbers</span>.</h1>
+      <p style="font-size:1.1rem;color:var(--muted);max-width:540px;margin-top:1.25rem;line-height:1.75" class="fade-in">Real clients, real challenges, real results. No cherry-picking — just documented outcomes from our work.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+
+      <div class="cs-full-card fade-in">
+        <div class="cs-full-head">
+          <div>
+            <div class="cs-industry">Executive Coaching | Dubai, UAE</div>
+            <h2 class="text-white" style="font-size:1.8rem;margin:.5rem 0 1rem">Leadership Coach Triples Revenue in 90 Days</h2>
+            <span class="badge badge-coral">Funnel + Website + CRM</span>
+          </div>
+          <div class="cs-result-grid">
+            <div class="cs-result"><div class="cs-result-val text-coral">340%</div><div class="cs-result-label">Conversion lift</div></div>
+            <div class="cs-result"><div class="cs-result-val text-teal">$22K</div><div class="cs-result-label">Added MRR</div></div>
+            <div class="cs-result"><div class="cs-result-val" style="color:var(--blue)">6wk</div><div class="cs-result-label">Calendar waitlist</div></div>
+          </div>
+        </div>
+        <div class="cs-full-body">
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Challenge</div>
+            <p>Amira was a world-class executive coach with a beautiful website and 2–3 leads per month. Zero email list, no funnel, no follow-up system. She was entirely dependent on referrals and word-of-mouth — unpredictable and not scalable.</p>
+          </div>
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Solution Delivered</div>
+            <p>Complete rebuild: brand-aligned website + 5-step application funnel with VSL + 10-email behavioural nurture sequence + CRM tagging + Calendly integration + retargeting pixel setup. Launched in 21 days.</p>
+          </div>
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Results Achieved</div>
+            <p>Within 90 days: calendar booked 6 weeks ahead, 340% conversion rate increase, $22K new monthly recurring coaching revenue. A waitlist of 40+ qualified prospects was opened within 4 months.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-full-card fade-in">
+        <div class="cs-full-head" style="background:linear-gradient(135deg,rgba(0,212,170,0.07),rgba(75,142,255,0.05))">
+          <div>
+            <div class="cs-industry">Online Education | United Kingdom</div>
+            <h2 class="text-white" style="font-size:1.8rem;margin:.5rem 0 1rem">Course Creator Achieves $180K in a 14-Day Launch Window</h2>
+            <span class="badge badge-green">Platform + Funnel + Launch Strategy</span>
+          </div>
+          <div class="cs-result-grid">
+            <div class="cs-result"><div class="cs-result-val text-teal">$180K</div><div class="cs-result-label">Launch revenue</div></div>
+            <div class="cs-result"><div class="cs-result-val" style="color:var(--blue)">2,400</div><div class="cs-result-label">Students enrolled</div></div>
+            <div class="cs-result"><div class="cs-result-val" style="color:var(--amber)">7.6K</div><div class="cs-result-label">List growth</div></div>
+          </div>
+        </div>
+        <div class="cs-full-body">
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Challenge</div>
+            <p>James had an Instagram following of 85K and a flagship financial freedom course — launched once on Gumroad for $3,200. He knew he was massively underperforming and needed professional infrastructure to match his audience size.</p>
+          </div>
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Solution Delivered</div>
+            <p>Branded Kajabi platform + custom launch landing page + 7-part pre-launch email series + live webinar funnel + order bump + premium tier upsell + post-purchase onboarding sequence. Built and tested in 28 days.</p>
+          </div>
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Results Achieved</div>
+            <p>$180K revenue in 14 days. 2,400 students enrolled. 18% order bump conversion. 220 premium tier upgrades. Email list grew from 1,100 to 8,700. Course is now evergreen and generates $15K/month passively.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-full-card fade-in">
+        <div class="cs-full-head" style="background:linear-gradient(135deg,rgba(75,142,255,0.08),rgba(255,92,56,0.04))">
+          <div>
+            <div class="cs-industry">B2B SaaS | United States</div>
+            <h2 class="text-white" style="font-size:1.8rem;margin:.5rem 0 1rem">SaaS Startup 5× Demo Bookings After Full Website Overhaul</h2>
+            <span class="badge badge-blue">Website + Messaging + CRM</span>
+          </div>
+          <div class="cs-result-grid">
+            <div class="cs-result"><div class="cs-result-val" style="color:var(--amber)">500%</div><div class="cs-result-label">More demos</div></div>
+            <div class="cs-result"><div class="cs-result-val text-teal">38%</div><div class="cs-result-label">Trial-to-paid</div></div>
+            <div class="cs-result"><div class="cs-result-val text-coral">-42%</div><div class="cs-result-label">Bounce rate</div></div>
+          </div>
+        </div>
+        <div class="cs-full-body">
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Challenge</div>
+            <p>GrowthOS had an outstanding product but a website failing to communicate its value. 76% bounce rate. 4 demo bookings per week. Enterprise prospects weren't taking them seriously. Investors questioned their GTM credibility.</p>
+          </div>
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Solution Delivered</div>
+            <p>Complete Webflow marketing site rebuild with new messaging hierarchy, hero section redesign, interactive product demo, social proof overhaul, pricing page CRO, and HubSpot integration with lead scoring and automated follow-up sequences.</p>
+          </div>
+          <div class="cs-phase-block">
+            <div class="cs-phase-title">Results Achieved</div>
+            <p>Bounce rate: 76% → 34%. Demo bookings: 4 → 24/week (+500%). Trial-to-paid: 11% → 38%. ARR grew from $180K to $640K in 8 months. Seed round of $1.2M closed 3 months post-launch, with investors citing the website as key to their confidence.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section final-cta">
+    <div class="container final-cta-inner">
+      <span class="eyebrow fade-in">Your Business, Next</span>
+      <h2 class="text-white mt-1 fade-in">Ready to become our<br>next case study?</h2>
+      <p class="fade-in d1">Let's build your success story. Book a free strategy call to map out what's possible.</p>
+      <div class="final-cta-actions fade-in d2">
+        <a href="#" class="btn btn-primary btn-lg" onclick="goPage('contact');return false;">Book Free Strategy Call →</a>
+      </div>
+    </div>
+  </section>
+</div><!-- /cases -->
+
+
+<!-- ════════════════════════════════════════
+     ██ ABOUT PAGE
+════════════════════════════════════════ -->
+<div class="page" id="pg-about">
+  <section class="about-hero">
+    <div class="container">
+      <span class="eyebrow fade-in">About Digitologics</span>
+      <h1 class="text-white mt-1 fade-in" style="max-width:700px">We're obsessed with<br><span class="coral-text">your results</span>,<br>not our portfolio.</h1>
+      <p style="font-size:1.1rem;color:var(--muted);max-width:600px;margin-top:1.25rem;line-height:1.75" class="fade-in">Digitologics was founded on a belief that most digital agencies are optimising for the wrong thing. We measure success in client revenue, not design awards.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="about-manifesto fade-in">
+        <div class="g2">
+          <div>
+            <span class="eyebrow">Our Story</span>
+            <h2 class="text-white mt-1">Built by marketers.<br>Run like engineers.</h2>
+          </div>
+          <div>
+            <p style="color:var(--muted);line-height:1.85;margin-bottom:1.25rem">Digitologics was born out of frustration. Our founders spent years inside digital marketing and development roles at Fortune 500 companies — watching small business owners and creators being sold beautiful websites that generated zero leads.</p>
+            <p style="color:var(--muted);line-height:1.85">We set out to build a different kind of agency: one that combines the technical excellence of a development studio, the strategic thinking of a growth consultancy, and the creative output of a world-class design team — with a single-minded focus on what actually matters: your conversion rate and your revenue.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin:60px 0">
+        <div class="sh fade-in"><span class="eyebrow">The Team</span><h2 class="text-white mt-1">The people behind your results</h2></div>
+        <div class="team-grid">
+          <div class="team-member fade-in">
+            <div class="tm-av">DL</div>
+            <h3 class="text-white">Daniel Lee</h3>
+            <div class="tm-role">Founder & Strategy Director</div>
+            <p class="tm-bio">10+ years in digital growth strategy. Former Head of Growth at two Y Combinator startups. Has architected funnels that have collectively generated over $50M in client revenue.</p>
+          </div>
+          <div class="team-member fade-in d1">
+            <div class="tm-av teal">SC</div>
+            <h3 class="text-white">Sarah Chen</h3>
+            <div class="tm-role" style="color:var(--teal)">Head of Design & UX</div>
+            <p class="tm-bio">Award-winning designer specialising in conversion-led UI. Previously design lead at a top Shopify Plus agency. Passionate about transforming beautiful design into measurable business outcomes.</p>
+          </div>
+          <div class="team-member fade-in d2">
+            <div class="tm-av blue">MR</div>
+            <h3 class="text-white">Marcus Reid</h3>
+            <div class="tm-role" style="color:var(--blue)">Lead Developer</div>
+            <p class="tm-bio">Full-stack developer with deep expertise in Webflow, Next.js, and marketing automation. Built and launched 60+ websites and platforms with a perfect on-time delivery record.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sh fade-in"><span class="eyebrow">Our Values</span><h2 class="text-white mt-1">What we stand for</h2></div>
+        <div class="values-grid">
+          <div class="value-card fade-in">
+            <div class="vc-icon">📊</div>
+            <div class="vc-title">Results First, Always</div>
+            <p class="vc-desc">We never prioritise aesthetics over performance. Every design decision, every headline, every CTA is evaluated through one lens: will this increase conversion and generate revenue?</p>
+          </div>
+          <div class="value-card fade-in d1">
+            <div class="vc-icon">🤝</div>
+            <div class="vc-title">Partnership, Not Transactions</div>
+            <p class="vc-desc">Our clients aren't project numbers. We invest deeply in understanding your business, your audience, and your goals — and we treat your success as a direct reflection of our own.</p>
+          </div>
+          <div class="value-card fade-in d2">
+            <div class="vc-icon">⚡</div>
+            <div class="vc-title">Radical Transparency</div>
+            <p class="vc-desc">No jargon, no vanity metrics, no smoke and mirrors. You'll always know exactly what we're building, why, and what measurable result you should expect to see.</p>
+          </div>
+          <div class="value-card fade-in d3">
+            <div class="vc-icon">🚀</div>
+            <div class="vc-title">Compound Optimisation</div>
+            <p class="vc-desc">Launch is just the beginning. We build systems that improve with data over time — with structured iteration cycles that compound your results month over month.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section final-cta">
+    <div class="container final-cta-inner">
+      <h2 class="text-white fade-in">Ready to work with a team that<br><span class="coral-text">cares about your growth?</span></h2>
+      <p class="fade-in d1">Limited spots available each quarter. Let's see if we're the right fit.</p>
+      <div class="final-cta-actions fade-in d2">
+        <a href="#" class="btn btn-primary btn-lg" onclick="goPage('contact');return false;">Book a Discovery Call →</a>
+      </div>
+    </div>
+  </section>
+</div><!-- /about -->
+
+
+<!-- ════════════════════════════════════════
+     ██ BLOG / INSIGHTS PAGE
+════════════════════════════════════════ -->
+<div class="page" id="pg-blog">
+  <section class="blog-hero">
+    <div class="container">
+      <span class="eyebrow fade-in">Insights & Strategy</span>
+      <h1 class="text-white mt-1 fade-in" style="max-width:700px">Tactics that actually<br><span class="coral-text">grow businesses</span>.</h1>
+      <p style="font-size:1.1rem;color:var(--muted);max-width:560px;margin-top:1.25rem;line-height:1.75" class="fade-in">No fluff. No hype. Just proven conversion strategies, funnel insights, and digital growth frameworks from the front lines.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+
+      <div class="blog-featured-card fade-in">
+        <div class="blog-feature-img">📈</div>
+        <div class="blog-feature-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Conversion Optimisation</span>
+            <span class="blog-date">March 2025</span>
+            <span class="blog-read-time">• 8 min read</span>
+          </div>
+          <h2 class="text-white">The 7 Landing Page Mistakes That Are Silently Killing Your Conversions</h2>
+          <p>We've audited 200+ landing pages and found the same fatal errors appearing again and again. Here are the 7 most damaging — and the exact fixes that consistently double conversion rates within 30 days.</p>
+          <a href="#" class="btn btn-primary btn-sm">Read Article <span class="arrow-icon">→</span></a>
+        </div>
+      </div>
+
+      <div class="blog-grid">
+        <div class="blog-card fade-in">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,rgba(255,92,56,0.12),rgba(255,92,56,0.04))">🎯</div>
+          <div class="blog-card-body">
+            <div class="blog-meta"><span class="blog-cat">Sales Funnels</span><span class="blog-date">Feb 2025</span></div>
+            <h3 class="text-white">How to Build a $100K Sales Funnel From Scratch</h3>
+            <p>A complete step-by-step framework for building your first high-converting funnel — from lead magnet design to core offer to upsell sequence.</p>
+          </div>
+          <div class="blog-card-footer">
+            <span style="font-size:.75rem;color:var(--faint)">10 min read</span>
+            <a href="#" style="font-size:.82rem;font-weight:600;color:var(--coral);text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">Read →</a>
+          </div>
+        </div>
+        <div class="blog-card fade-in d1">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,rgba(0,212,170,0.12),rgba(0,212,170,0.04))">🤖</div>
+          <div class="blog-card-body">
+            <div class="blog-meta"><span class="blog-cat">Automation</span><span class="blog-date">Feb 2025</span></div>
+            <h3 class="text-white">The Automation Stack That Generates Leads 24/7</h3>
+            <p>The exact tools and workflows we use to automate 80% of follow-up and lead nurturing for our clients — without sacrificing the personal touch.</p>
+          </div>
+          <div class="blog-card-footer">
+            <span style="font-size:.75rem;color:var(--faint)">6 min read</span>
+            <a href="#" style="font-size:.82rem;font-weight:600;color:var(--coral);text-decoration:none">Read →</a>
+          </div>
+        </div>
+        <div class="blog-card fade-in d2">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,rgba(75,142,255,0.12),rgba(75,142,255,0.04))">📚</div>
+          <div class="blog-card-body">
+            <div class="blog-meta"><span class="blog-cat">Course Business</span><span class="blog-date">Jan 2025</span></div>
+            <h3 class="text-white">How to Price and Launch a Course That Sells Out</h3>
+            <p>Pricing psychology, positioning frameworks, and the exact pre-launch email strategies behind every $100K+ course launch we've run.</p>
+          </div>
+          <div class="blog-card-footer">
+            <span style="font-size:.75rem;color:var(--faint)">9 min read</span>
+            <a href="#" style="font-size:.82rem;font-weight:600;color:var(--coral);text-decoration:none">Read →</a>
+          </div>
+        </div>
+        <div class="blog-card fade-in">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,rgba(255,179,64,0.12),rgba(255,179,64,0.04))">💡</div>
+          <div class="blog-card-body">
+            <div class="blog-meta"><span class="blog-cat">UX Design</span><span class="blog-date">Jan 2025</span></div>
+            <h3 class="text-white">Why Beautiful Websites Don't Convert (And How to Fix Yours)</h3>
+            <p>The invisible gap between "looks professional" and "generates revenue" — and the 5 design principles that bridge it.</p>
+          </div>
+          <div class="blog-card-footer">
+            <span style="font-size:.75rem;color:var(--faint)">7 min read</span>
+            <a href="#" style="font-size:.82rem;font-weight:600;color:var(--coral);text-decoration:none">Read →</a>
+          </div>
+        </div>
+        <div class="blog-card fade-in d1">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,rgba(255,92,56,0.08),rgba(124,58,237,0.08))">🔍</div>
+          <div class="blog-card-body">
+            <div class="blog-meta"><span class="blog-cat">SEO</span><span class="blog-date">Dec 2024</span></div>
+            <h3 class="text-white">SEO for Coaches & Creators: Rank Without a $3K/Month Agency</h3>
+            <p>A practical, no-nonsense SEO guide for coaches and course creators who want organic traffic and leads without the massive retainer.</p>
+          </div>
+          <div class="blog-card-footer">
+            <span style="font-size:.75rem;color:var(--faint)">11 min read</span>
+            <a href="#" style="font-size:.82rem;font-weight:600;color:var(--coral);text-decoration:none">Read →</a>
+          </div>
+        </div>
+        <div class="blog-card fade-in d2">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(75,142,255,0.08))">📧</div>
+          <div class="blog-card-body">
+            <div class="blog-meta"><span class="blog-cat">Email Marketing</span><span class="blog-date">Dec 2024</span></div>
+            <h3 class="text-white">The 10-Email Welcome Sequence That Turns Leads into Buyers</h3>
+            <p>Our proven template — including subject lines, timing, psychology frameworks, and CTAs — that consistently converts new subscribers into paying clients.</p>
+          </div>
+          <div class="blog-card-footer">
+            <span style="font-size:.75rem;color:var(--faint)">5 min read</span>
+            <a href="#" style="font-size:.82rem;font-weight:600;color:var(--coral);text-decoration:none">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-newsletter fade-in">
+        <span class="eyebrow">Newsletter</span>
+        <h2 class="text-white mt-1" style="font-size:2rem">Get weekly growth strategies<br>in your inbox</h2>
+        <p style="color:var(--muted);margin:1rem auto 2rem;max-width:400px;font-size:.92rem">Join 4,100+ founders and creators. One high-signal email per week. No fluff. Unsubscribe anytime.</p>
+        <div style="display:flex;gap:.75rem;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center">
+          <input type="email" placeholder="your@email.com" style="flex:1;min-width:200px;padding:13px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;color:var(--off-white);font-family:var(--font-body);font-size:.9rem;outline:none;">
+          <button class="btn btn-primary" onclick="handleNewsletter(this)">Subscribe →</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div><!-- /blog -->
+
+
+<!-- ════════════════════════════════════════
+     ██ CONTACT PAGE
+════════════════════════════════════════ -->
+<div class="page" id="pg-contact">
+  <section class="contact-hero">
+    <div class="container">
+      <span class="eyebrow fade-in">Get In Touch</span>
+      <h1 class="text-white mt-1 fade-in" style="max-width:700px">Let's build your<br><span class="coral-text">growth engine</span>.</h1>
+      <p style="font-size:1.1rem;color:var(--muted);max-width:560px;margin-top:1.25rem;line-height:1.75" class="fade-in">Book a free 30-minute strategy call. We'll review your digital setup, identify the biggest growth levers, and give you a clear path forward — no pressure, no pitch.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Left: Info -->
+        <div class="fade-in">
+          <div class="contact-info-section">
+            <h3 class="text-white">Contact Information</h3>
+            <a class="contact-item" href="mailto:hello@digitologics.com">
+              <div class="ci-icon">📧</div>
+              <div class="ci-text"><strong>hello@digitologics.com</strong><span>Email — we reply within 4 hours</span></div>
+            </a>
+            <a class="contact-item" href="tel:+15551234567">
+              <div class="ci-icon">📞</div>
+              <div class="ci-text"><strong>+1 (555) 123-4567</strong><span>Mon–Fri, 9AM–6PM EST</span></div>
+            </a>
+            <a class="contact-item" href="#">
+              <div class="ci-icon">📍</div>
+              <div class="ci-text"><strong>Remote-First Agency</strong><span>Serving clients in 15+ countries</span></div>
+            </a>
+          </div>
+
+          <div class="contact-info-section">
+            <h3 class="text-white">WhatsApp</h3>
+            <p style="font-size:.85rem;color:var(--muted);margin-bottom:.75rem">Prefer to message? Get a same-day response on WhatsApp.</p>
+            <a class="wa-button" href="https://wa.me/15551234567" target="_blank">
+              <span style="font-size:1.2rem">💬</span>
+              Chat on WhatsApp
+            </a>
+          </div>
+
+          <div class="contact-info-section">
+            <h3 class="text-white">Schedule a Call</h3>
+            <div class="cal-embed">
+              <div style="font-size:2.5rem;margin-bottom:.5rem">📅</div>
+              <strong class="text-white">Free 30-Min Strategy Call</strong>
+              <p>Choose a time that works. We'll prepare before the call so every minute counts.</p>
+              <a href="#" class="btn btn-teal" style="margin-top:1.25rem;width:100%;justify-content:center">Open Booking Calendar</a>
+            </div>
+          </div>
+
+          <div class="contact-info-section">
+            <h3 class="text-white">Response Times</h3>
+            <div class="resp-badges">
+              <div class="resp-badge"><span>Email</span><span class="badge badge-green">Within 4 hours</span></div>
+              <div class="resp-badge"><span>WhatsApp</span><span class="badge badge-green">Within 1 hour</span></div>
+              <div class="resp-badge"><span>Strategy Call</span><span class="badge badge-amber">Book 24hrs ahead</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="contact-form-card fade-in d1">
+          <h3 class="text-white">Book Your Free Consultation</h3>
+          <p>Tell us about your project. We'll review everything before your call so we can make it as valuable as possible.</p>
+
+          <div class="form-row">
+            <div class="form-group"><label>First Name *</label><input type="text" placeholder="John"></div>
+            <div class="form-group"><label>Last Name *</label><input type="text" placeholder="Smith"></div>
+          </div>
+          <div class="form-group"><label>Work Email *</label><input type="email" placeholder="john@yourcompany.com"></div>
+          <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" placeholder="+1 555 000 0000"></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Business Type *</label>
+              <select>
+                <option value="">Select...</option>
+                <option>Coach / Consultant</option>
+                <option>Course Creator</option>
+                <option>Online Business</option>
+                <option>SaaS / Startup</option>
+                <option>Service Business</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Monthly Revenue</label>
+              <select>
+                <option value="">Select range</option>
+                <option>Pre-revenue</option>
+                <option>$0 – $5K/mo</option>
+                <option>$5K – $25K/mo</option>
+                <option>$25K – $100K/mo</option>
+                <option>$100K+/mo</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Service You're Interested In *</label>
+            <select>
+              <option value="">Select a service</option>
+              <option>Website Development</option>
+              <option>Sales Funnel Creation</option>
+              <option>Course Platform Setup</option>
+              <option>UI/UX Design</option>
+              <option>Digital Automation Systems</option>
+              <option>Full Digital Transformation</option>
+              <option>Not sure — need guidance</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Describe Your Project & Goals *</label>
+            <textarea placeholder="Tell us where you are now, what you want to achieve, and any specific challenges you're facing..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Website URL (if you have one)</label>
+            <input type="text" placeholder="https://yoursite.com">
+          </div>
+          <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center" onclick="handleContact(this)">
+            📅 Book My Free Strategy Call
+          </button>
+          <p style="font-size:.75rem;color:var(--faint);text-align:center;margin-top:.9rem">🔒 Your information is 100% secure and confidential. No spam. No hard sell.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div><!-- /contact -->
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="nav-logo" href="#" onclick="goPage('home');return false;">Digito<em>logics</em></a>
+        <p>We build high-converting websites, sales funnels, and digital systems for coaches, course creators, and online businesses serious about growth.</p>
+        <div class="social-icons">
+          <a href="#" class="si">in</a>
+          <a href="#" class="si">tw</a>
+          <a href="#" class="si">ig</a>
+          <a href="#" class="si">yt</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#" onclick="goPage('services');return false;">Website Development</a></li>
+          <li><a href="#" onclick="goPage('services');return false;">Sales Funnel Creation</a></li>
+          <li><a href="#" onclick="goPage('services');return false;">Course Platforms</a></li>
+          <li><a href="#" onclick="goPage('services');return false;">UI/UX Design</a></li>
+          <li><a href="#" onclick="goPage('services');return false;">Automation Systems</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#" onclick="goPage('about');return false;">About Us</a></li>
+          <li><a href="#" onclick="goPage('cases');return false;">Case Studies</a></li>
+          <li><a href="#" onclick="goPage('blog');return false;">Blog & Insights</a></li>
+          <li><a href="#" onclick="goPage('contact');return false;">Book a Strategy Call</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Get In Touch</h5>
+        <ul>
+          <li><a href="mailto:hello@digitologics.com">hello@digitologics.com</a></li>
+          <li><a href="https://wa.me/15551234567">WhatsApp Chat</a></li>
+          <li><a href="#" onclick="document.getElementById('audit-section').scrollIntoView({behavior:'smooth'});goPage('home');return false;">Free Website Audit</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Digitologics. All rights reserved.</p>
+      <p>Built to convert. Engineered to scale.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+  // ── Page Navigation ──
+  function goPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const pg = document.getElementById('pg-' + id);
+    if (pg) { pg.classList.add('active'); }
+    document.querySelectorAll('[data-pg]').forEach(a => {
+      a.classList.toggle('active', a.dataset.pg === id);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(initFadeIns, 80);
+    return false;
+  }
+
+  // ── Mobile Menu ──
+  function toggleMobile() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+
+  // ── Scroll Nav ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 24);
+  }, { passive: true });
+
+  // ── Intersection Animations ──
+  function initFadeIns() {
+    const els = document.querySelectorAll('.fade-in:not(.visible)');
+    if (!els.length) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => obs.observe(el));
+  }
+  initFadeIns();
+
+  // ── Form Handlers ──
+  function handleAudit(btn) {
+    btn.innerHTML = '✅ Audit Request Sent! Check your inbox within 24 hours.';
+    btn.style.background = '#00d464';
+    btn.disabled = true;
+  }
+  function handleContact(btn) {
+    btn.innerHTML = '✅ Request Received — We\'ll be in touch within 4 hours!';
+    btn.style.background = '#00d464';
+    btn.disabled = true;
+  }
+  function handleNewsletter(btn) {
+    btn.innerHTML = '✅ Subscribed!';
+    btn.style.background = '#00d464';
+    btn.disabled = true;
+  }
+
+  // ── Prevent default on hash links ──
+  document.querySelectorAll('a[href="#"]').forEach(a => {
+    a.addEventListener('click', e => e.preventDefault());
+  });
+</script>
+</body>
+</html>
